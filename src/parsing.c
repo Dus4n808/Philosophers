@@ -36,5 +36,6 @@ int	parsing(int argc, char *argv[], t_data *data)
 	data->time_to_sleep = value;
 	if (!is_meal(argc, argv, data))
 		return (0);
+	data->someone_dead = 0;
 	return (1);
 }

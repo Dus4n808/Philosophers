@@ -20,3 +20,11 @@ void	eat(t_philo *philo)
 //fonction pour penser
 
 
+// void	print_status(char *to_print, pthread_mutex_t mutex, t_philo *philo)
+// {
+
+// 	pthread_mutex_lock(&mutex);
+// 	printf("Philo %d, %s\n",philo->id, to_print);
+// 	pthread_mutex_unlock(&mutex);
+// }
+

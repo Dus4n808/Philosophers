@@ -6,6 +6,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <limits.h>
+# include <sys/time.h>
 
 typedef struct s_data
 {
@@ -16,6 +17,7 @@ typedef struct s_data
 	int nb_of_meal;
 	pthread_mutex_t *forks;
 	pthread_mutex_t write_lock;
+	int	someone_dead;
 } t_data ;
 
 typedef struct s_philo
@@ -35,5 +37,10 @@ int check_overflow(const char *str, unsigned long *value);
 //parsing
 int	check_arg(char *str, unsigned long *value);
 int	parsing(int argc, char *argv[], t_data *data);
+
+//print
+void	print_status(char *to_print, pthread_mutex_t mutex, t_philo *philo);
+//time
+long	gettime();
 
 #endif

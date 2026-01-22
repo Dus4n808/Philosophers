@@ -6,7 +6,7 @@
 #    By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/20 15:12:35 by dufama            #+#    #+#              #
-#    Updated: 2026/01/21 15:16:56 by dufama           ###   ########.fr        #
+#    Updated: 2026/01/22 10:56:16 by dufama           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ OBJ_DIR = obj/
 SRC_FILES = philo.c \
 			utils.c \
 			parsing.c \
+			action.c \
+			time.c \
 
 SRCS = $(addprefix $(OBJ_DIR), $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))

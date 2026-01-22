@@ -5,8 +5,9 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	//print_status("coucou", philo->data->write_lock, philo);
 	pthread_mutex_lock(&philo->data->write_lock);
-	printf("Je suis le philosophe %d\n", philo->id);
+	printf("Philo %d, coucou", philo->id);
 	pthread_mutex_unlock(&philo->data->write_lock);
 
 	// while (1)
@@ -88,16 +89,22 @@ int main(int argc, char *argv[])
 {
 	t_data	data;
 	t_philo *philo;
+	//long time1;
+	//long time2;
 
 	if (!parsing(argc, argv, &data))
 	{
 		printf("Error Bad Arguments\n");
 		return (0);
 	}
-	if (data.nb_of_meal)
-		printf("%d\n", data.nb_of_meal);
+	// if (data.nb_of_meal)
+	// 	printf("%d\n", data.nb_of_meal);
+	//time1 = gettime();
 	init_mutex(&data);
+	//usleep(1000000);
 	philo = init_philo(&data);
 	init_thread(philo, &data);
 	join_thread(philo, &data);
+	//time2 = gettime();
+	//printf("Time interval (microseconds) : %ld\n", (time2 - time1));
 }
