@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 18:09:33 by dufama            #+#    #+#             */
+/*   Updated: 2026/01/23 18:10:54 by dufama           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	is_meal(int argc, char *argv[], t_data *data)
 {
 	unsigned long	value;
+
 	if (argc == 6)
 	{
 		if (!check_arg(argv[5], &value))
@@ -18,7 +31,7 @@ int	is_meal(int argc, char *argv[], t_data *data)
 
 int	parsing(int argc, char *argv[], t_data *data)
 {
-	unsigned long value;
+	unsigned long	value;
 
 	if (argc < 5 || argc > 6)
 		return (0);
@@ -36,6 +49,5 @@ int	parsing(int argc, char *argv[], t_data *data)
 	data->time_to_sleep = value;
 	if (!is_meal(argc, argv, data))
 		return (0);
-	data->someone_dead = 0;
 	return (1);
 }

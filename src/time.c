@@ -1,16 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   time.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 15:11:49 by dufama            #+#    #+#             */
+/*   Updated: 2026/01/23 18:14:54 by dufama           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-long	gettime()
+void	wait_start(t_data *data)
 {
-	struct	timeval current_time;
-	long time;
+	while (1)
+	{
+		pthread_mutex_lock(&data->start_lock);
+		if (data->start_flag == 1)
+		{
+			pthread_mutex_unlock(&data->start_lock);
+			break ;
+		}
+		pthread_mutex_unlock(&data->start_lock);
+		usleep(100);
+	}
+}
+
+unsigned long	get_time(void)
+{
+	struct timeval	current_time;
 
 	if (gettimeofday(&current_time, NULL) != 0)
 	{
 		printf("Error Time\n");
 		return (0);
 	}
-	time = current_time.tv_usec / 1000;
-	printf("Time in milliseconds %ld\n", time);
-	return (time);
+	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
+
+// unsigned long	interval(t_data *data)
+// {
+// 	return (get_time() - data->start_time);
+// }
+
+// void	ft_usleep(size_t milliseconds, t_data *data)
+// {
+// 	size_t	start;
+
+// 	start = get_time();
+// 	while ((get_time()- start) < milliseconds)
+// 	{
+// 		if (is_simulation_over(data))
+// 			break;
+// 		usleep(500);
+// 	}
+// }

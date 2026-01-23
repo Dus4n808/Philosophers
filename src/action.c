@@ -1,30 +1,84 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   action.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 15:34:57 by dufama            #+#    #+#             */
+/*   Updated: 2026/01/23 18:20:02 by dufama           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-//fonction pour manger
-void	eat(t_philo *philo)
+void	print_action(char *str, t_philo *philo)
 {
-	//il mange on bloque les fourchette de droite et de gauche
-	pthread_mutex_lock(philo->left_fork);
-	pthread_mutex_lock(philo->right_fork);
-	//affichage
+	unsigned long	time;
 
-	//conversion en milliseconde
+	time = get_time() - philo->data->start_time;
+	pthread_mutex_lock(&philo->data->write_lock);
+	if (philo->data->someone_dead)
+	{
+		pthread_mutex_unlock(&philo->data->write_lock);
+		return ;
+	}
+	printf("%lu %d %s\n", time, philo->id, str);
+	pthread_mutex_unlock(&philo->data->write_lock);
+}
+
+void	print_death(t_data *data, int i)
+{
+	unsigned long	time;
+
+	time = get_time() - data->start_time;
+	pthread_mutex_lock(&data->write_lock);
+	printf("%lu %d died\n", time, data->philo[i].id);
+	pthread_mutex_unlock(&data->write_lock);
+}
+
+void	eat_action(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_action("has taken a fork", philo);
+		pthread_mutex_lock(philo->right_fork);
+		print_action("has taken a fork", philo);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		print_action("has taken a fork", philo);
+		pthread_mutex_lock(philo->left_fork);
+		print_action("has taken a fork", philo);
+	}
+	pthread_mutex_lock(&philo->meal_lock);
+	philo->last_meal = get_time();
+	philo->meal_eaten++;
+	pthread_mutex_unlock(&philo->meal_lock);
+	print_action("is Eating", philo);
 	usleep(philo->data->time_to_eat * 1000);
-	//libération des forks
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 }
 
-//fonction pour dormir
+void	sleep_action(t_philo *philo)
+{
+	if (philo->data->someone_dead)
+		return ;
+	print_action("is sleeping", philo);
+	usleep(philo->data->time_to_sleep * 1000);
+}
 
-//fonction pour penser
+void	think_action(t_philo *philo)
+{
+	unsigned long	think;
 
-
-// void	print_status(char *to_print, pthread_mutex_t mutex, t_philo *philo)
-// {
-
-// 	pthread_mutex_lock(&mutex);
-// 	printf("Philo %d, %s\n",philo->id, to_print);
-// 	pthread_mutex_unlock(&mutex);
-// }
-
+	print_action("is thinking", philo);
+	if (philo->data->nb_philos % 2 == 1)
+	{
+		think = philo->data->time_to_eat;
+		usleep(think * 500);
+	}
+}

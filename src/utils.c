@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 18:15:07 by dufama            #+#    #+#             */
+/*   Updated: 2026/01/23 18:15:39 by dufama           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	is_digit(unsigned char c)
@@ -27,10 +39,9 @@ int	is_digit_str(const char *str)
 	return (1);
 }
 
-int check_overflow(const char *str, unsigned long *value)
+int	check_overflow(const char *str, unsigned long *value)
 {
 	*value = 0;
-
 	while (*str >= '0' && *str <= '9')
 	{
 		if (*value > (ULLONG_MAX - *str - '0') / 10)

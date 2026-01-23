@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 18:12:47 by dufama            #+#    #+#             */
+/*   Updated: 2026/01/23 18:12:48 by dufama           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void	free_mutex(t_data *data)
+void	free_mutex_data(t_data *data)
 {
 	int	i;
 
@@ -10,4 +22,12 @@ void	free_mutex(t_data *data)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
+	free(data->forks);
+	pthread_mutex_destroy(&data->write_lock);
+}
+
+void	free_mutex_philo(t_philo *philo)
+{
+	pthread_mutex_destroy(&philo->meal_lock);
+	pthread_mutex_destroy(&philo->meal_lock);
 }
