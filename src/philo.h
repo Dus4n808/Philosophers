@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 18:15:56 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/23 18:19:06 by dufama           ###   ########.fr       */
+/*   Updated: 2026/01/26 16:54:37 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_data
 	pthread_mutex_t	start_lock;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_lock;
+	pthread_mutex_t	dead_lock;
 	int				someone_dead;
 	struct s_philo	*philo;
 }	t_data;
@@ -75,12 +76,10 @@ void			print_action(char *str, t_philo *philo);
 //time
 unsigned long	get_time(void);
 void			wait_start(t_data *data);
+void			ft_usleep(size_t milliseconds);
 //action
 void			eat_action(t_philo *philo);
 void			sleep_action(t_philo *philo);
-void			think_action(t_philo *philo);
-//control
-// int	is_simulation_over(t_data *data);
 //monitor
 int				check_death(t_data *data, int i);
 void			*routine_monitor(void *arg);

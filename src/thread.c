@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 15:15:16 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/23 18:11:48 by dufama           ###   ########.fr       */
+/*   Updated: 2026/01/26 16:58:09 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	*routine_philo(void *arg)
 		sleep_action(philo);
 		if (philo->data->someone_dead)
 			break ;
-		think_action(philo);
 	}
 	return (NULL);
 }

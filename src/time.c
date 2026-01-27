@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 15:11:49 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/23 18:14:54 by dufama           ###   ########.fr       */
+/*   Updated: 2026/01/26 16:39:37 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,12 @@ unsigned long	get_time(void)
 	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
 
-// unsigned long	interval(t_data *data)
-// {
-// 	return (get_time() - data->start_time);
-// }
+void	ft_usleep(size_t milliseconds)
+{
+	size_t	start;
 
-// void	ft_usleep(size_t milliseconds, t_data *data)
-// {
-// 	size_t	start;
-
-// 	start = get_time();
-// 	while ((get_time()- start) < milliseconds)
-// 	{
-// 		if (is_simulation_over(data))
-// 			break;
-// 		usleep(500);
-// 	}
-// }
+	start = get_time();
+	while ((get_time()- start) < milliseconds)
+		usleep(500);
+	return ;
+}

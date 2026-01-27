@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 15:34:57 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/23 18:20:02 by dufama           ###   ########.fr       */
+/*   Updated: 2026/01/26 16:58:33 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ void	eat_action(t_philo *philo)
 	philo->meal_eaten++;
 	pthread_mutex_unlock(&philo->meal_lock);
 	print_action("is Eating", philo);
-	usleep(philo->data->time_to_eat * 1000);
+	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	print_action("Is thinking", philo);
 }
 
 void	sleep_action(t_philo *philo)
@@ -68,17 +69,5 @@ void	sleep_action(t_philo *philo)
 	if (philo->data->someone_dead)
 		return ;
 	print_action("is sleeping", philo);
-	usleep(philo->data->time_to_sleep * 1000);
-}
-
-void	think_action(t_philo *philo)
-{
-	unsigned long	think;
-
-	print_action("is thinking", philo);
-	if (philo->data->nb_philos % 2 == 1)
-	{
-		think = philo->data->time_to_eat;
-		usleep(think * 500);
-	}
+	ft_usleep(philo->data->time_to_sleep);
 }
