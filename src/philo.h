@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 18:15:56 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/26 16:54:37 by dufama           ###   ########.fr       */
+/*   Updated: 2026/01/27 12:02:20 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,19 @@ void			ft_usleep(size_t milliseconds);
 //action
 void			eat_action(t_philo *philo);
 void			sleep_action(t_philo *philo);
+void			thinking_action(t_philo *philo);
 //monitor
 int				check_death(t_data *data, int i);
 void			*routine_monitor(void *arg);
 void			create_thread_monitor(t_data *data);
 void			join_monitor(t_data *data);
 void			print_death(t_data *data, int i);
+int				stop_simu(t_data *data);
 //free
 void			free_mutex_data(t_data *data);
 void			free_mutex_philo(t_philo *philo);
+
+//eat
+int	all_finish_eaten(t_data *data);
 
 #endif

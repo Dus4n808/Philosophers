@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 15:15:16 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/26 16:58:09 by dufama           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:36:21 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	one_philo(t_philo *philo)
 	if (philo->data->nb_philos == 1)
 	{
 		print_action("has taken a fork", philo);
-		while (philo->data->someone_dead == 0)
+		while (!stop_simu(philo->data))
 			usleep(100);
 		return ;
 	}
@@ -28,22 +28,25 @@ void	*routine_philo(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->meal_lock);
 	wait_start(philo->data);
 	one_philo(philo);
 	if (philo->id % 2 == 0)
 		usleep(1000);
-	while (philo->data->someone_dead == 0)
+	while (!stop_simu(philo->data))
 	{
 		if (philo->data->nb_of_meal != -1
-			&& philo->meal_eaten >= philo->data->nb_of_meal)
+			&&  philo->meal_eaten >= philo->data->nb_of_meal)
 			break ;
 		eat_action(philo);
-		if (philo->data->someone_dead)
+		if (stop_simu(philo->data))
 			break ;
 		sleep_action(philo);
-		if (philo->data->someone_dead)
+		if (stop_simu(philo->data))
 			break ;
+		thinking_action(philo);
 	}
 	return (NULL);
 }

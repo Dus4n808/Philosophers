@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 15:34:57 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/26 16:58:33 by dufama           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:36:14 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_action(char *str, t_philo *philo)
 
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->write_lock);
-	if (philo->data->someone_dead)
+	if (stop_simu(philo->data))
 	{
 		pthread_mutex_unlock(&philo->data->write_lock);
 		return ;
@@ -27,15 +27,15 @@ void	print_action(char *str, t_philo *philo)
 	pthread_mutex_unlock(&philo->data->write_lock);
 }
 
-void	print_death(t_data *data, int i)
-{
-	unsigned long	time;
+// void	print_death(t_data *data, int i)
+// {
+// 	unsigned long	time;
 
-	time = get_time() - data->start_time;
-	pthread_mutex_lock(&data->write_lock);
-	printf("%lu %d died\n", time, data->philo[i].id);
-	pthread_mutex_unlock(&data->write_lock);
-}
+// 	time = get_time() - data->start_time;
+// 	pthread_mutex_lock(&data->write_lock);
+// 	printf("%lu %d died\n", time, data->philo[i].id);
+// 	pthread_mutex_unlock(&data->write_lock);
+// }
 
 void	eat_action(t_philo *philo)
 {
@@ -61,13 +61,15 @@ void	eat_action(t_philo *philo)
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
-	print_action("Is thinking", philo);
 }
 
 void	sleep_action(t_philo *philo)
 {
-	if (philo->data->someone_dead)
-		return ;
 	print_action("is sleeping", philo);
 	ft_usleep(philo->data->time_to_sleep);
+}
+
+void	thinking_action(t_philo *philo)
+{
+	print_action("Is thinink", philo);
 }
