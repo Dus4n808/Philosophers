@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 18:12:47 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/27 11:11:24 by dufama           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:28:59 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,12 @@ void	free_mutex_data(t_data *data)
 
 void	free_mutex_philo(t_philo *philo)
 {
-	pthread_mutex_destroy(&philo->meal_lock);
+	int	i;
+
+	i = 0;
+	while (i < philo->data->nb_philos)
+	{
+		pthread_mutex_destroy(&philo[i].meal_lock);
+		i++;
+	}
 }

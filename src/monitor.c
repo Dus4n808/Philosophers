@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 18:20:22 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/27 11:50:11 by dufama           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:26:19 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	check_death(t_data *data, int i)
 	pthread_mutex_unlock(&data->philo[i].meal_lock);
 	if (time > data->time_to_die)
 	{
-		pthread_mutex_lock(&data->write_lock);
+		pthread_mutex_lock(&data->dead_lock);
 		data->someone_dead = 1;
 		printf("%lu %d died\n", get_time() - data->start_time, data->philo[i].id);
-		pthread_mutex_unlock(&data->write_lock);
+		pthread_mutex_unlock(&data->dead_lock);
 		return (1);
 	}
 	return (0);
@@ -73,17 +73,20 @@ void	*routine_monitor(void *arg)
 	while (!stop_simu(data))
 	{
 		if (all_finish_eaten(data))
+		{
+			pthread_mutex_lock(&data->dead_lock);
+			data->someone_dead = 1;
+			pthread_mutex_unlock(&data->dead_lock);
 			return (NULL);
+		}
 		i = 0;
 		while (i < data->nb_philos)
 		{
-			if (!is_finish_eaten(data, i))
-				return (NULL);
 			if (check_death(data, i))
 				return (NULL);
 			i++;
 		}
-		usleep(100);
+		usleep(500);
 	}
 	return (NULL);
 }
