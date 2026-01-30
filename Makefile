@@ -6,7 +6,7 @@
 #    By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/20 15:12:35 by dufama            #+#    #+#              #
-#    Updated: 2026/01/23 16:41:41 by dufama           ###   ########.fr        #
+#    Updated: 2026/01/30 13:12:01 by dufama           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,14 +26,16 @@ OBJ_DIR = obj/
 MAIN = main.c
 
 SRC_FILES = main.c \
-			init.c \
-			utils.c \
 			parsing.c \
-			free.c \
-			thread.c \
-			action.c \
 			time.c \
-			monitor.c \
+			utils.c \
+			free.c \
+			action.c \
+			init_mutex.c \
+			init_philo.c \
+			init_thread.c \
+			init_monitor.c \
+
 
 SRCS = $(addprefix $(OBJ_DIR), $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
