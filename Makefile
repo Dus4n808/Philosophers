@@ -6,7 +6,7 @@
 #    By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/20 15:12:35 by dufama            #+#    #+#              #
-#    Updated: 2026/02/02 08:54:31 by dufama           ###   ########.fr        #
+#    Updated: 2026/02/02 09:40:04 by dufama           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ ARGS = 4 310 200 100
 NAME = philo
 CC = cc -g
 CFLAGS = -Wall -Werror -Wextra -I.
-SRC_DIR = src/
+SRC_DIR = philo/src/
 OBJ_DIR = obj/
 
 MAIN = main.c
