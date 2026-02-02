@@ -134,6 +134,7 @@ The `ft_usleep` function implements a busy-wait loop with `usleep(500)` incremen
 - [POSIX Threads Programming](https://computing.llnl.gov/tutorials/pthreads/)
 - [Dining Philosophers Problem - Wikipedia](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
 - [Mutex Lock for Linux Thread Synchronization](https://www.geeksforgeeks.org/mutex-lock-for-linux-thread-synchronization/)
+- [CodeVault](https://www.youtube.com/watch?v=d9s_d28yJq0&list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2).
 
 ### Man Pages
 
