@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 12:46:04 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/30 13:39:08 by dufama           ###   ########.fr       */
+/*   Updated: 2026/02/02 11:25:22 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,12 @@ static int	check_all_eaten(t_data *data)
 	i = 0;
 	while (i < data->nb_philos)
 	{
+		pthread_mutex_lock(&data->write_lock);
 		pthread_mutex_lock(&data->philo[i].meal_lock);
 		if (data->philo[i].meal_eaten >= data->nb_of_meal)
 			finished++;
 		pthread_mutex_unlock(&data->philo[i].meal_lock);
+		pthread_mutex_unlock(&data->write_lock);
 		i++;
 	}
 	if (finished == data->nb_philos)
