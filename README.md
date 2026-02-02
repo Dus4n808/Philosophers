@@ -34,6 +34,7 @@ The scenario involves a number of philosophers sitting at a round table, alterna
 
 ### Compilation
 ```bash
+cd philo
 make        # Compile the project
 make clean  # Remove object files
 make fclean # Remove object files and executable
