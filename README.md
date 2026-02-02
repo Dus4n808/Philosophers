@@ -76,10 +76,10 @@ timestamp_in_ms philosopher_id action
 ```
 
 Actions:
-- `has taken a fork`
-- `is eating`
-- `is sleeping`
-- `is thinking`
+- `Has taken a fork`
+- `Is eating`
+- `Is sleeping`
+- `Is thinking`
 - `died`
 
 ### Debug Tools
@@ -91,22 +91,41 @@ make gdb        # Launch GDB debugger
 
 ## Technical Choices
 
+### Synchronized Start
+
+All philosopher threads and the monitor thread wait on a shared `start_flag` protected by `start_lock`. The main thread creates all threads, initializes `last_meal` timestamps, then sets `start_flag` to 1. This ensures all philosophers begin the simulation at the same time with accurate initial meal timestamps, preventing false death detections at startup.
+
 ### Deadlock Prevention
 
 To prevent deadlocks, philosophers pick up forks in different orders based on their ID:
 - **Even-numbered philosophers**: Pick up left fork first, then right fork
 - **Odd-numbered philosophers**: Pick up right fork first, then left fork
 
+Even-numbered philosophers also have a small initial delay (`ft_usleep(1)`) at the start of the simulation to stagger fork acquisition and reduce contention.
+
+### Single Philosopher Handling
+
+When there is only one philosopher, they can only take one fork and will inevitably die. This edge case is handled explicitly: the philosopher takes a fork, then waits until the monitor detects their death.
+
+### Monitor Thread
+
+A dedicated monitor thread continuously checks two conditions:
+- **Death detection**: Compares the time since each philosopher's last meal against `time_to_die`
+- **Meal completion**: If a meal count is specified, checks whether all philosophers have eaten the required number of times
+
+The monitor polls at 500µs intervals to balance responsiveness with CPU usage.
+
 ### Data Race Prevention
 
 All shared variables are protected with mutexes:
 - `meal_lock`: Protects `last_meal` and `meal_eaten` for each philosopher
-- `write_lock`: Protects console output
+- `write_lock`: Protects console output to prevent garbled messages
+- `dead_lock`: Protects the `dead` flag checked by all threads
 - `start_lock`: Synchronizes simulation start
 
-### Odd Number of Philosophers
+### Precise Sleep
 
-When there is an odd number of philosophers, an additional thinking time is added to prevent starvation.
+The `ft_usleep` function implements a busy-wait loop with `usleep(500)` increments instead of a single `usleep` call. This provides more accurate timing and allows threads to check the `dead` flag during sleep, enabling faster termination when a philosopher dies.
 
 ## Resources
 
