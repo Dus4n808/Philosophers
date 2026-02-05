@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 12:07:32 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/30 12:32:17 by dufama           ###   ########.fr       */
+/*   Updated: 2026/02/05 16:17:54 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ void	message(char *str, t_philo *philo)
 	if (is_dead(philo->data))
 		return ;
 	pthread_mutex_lock(&philo->data->write_lock);
+	pthread_mutex_lock(&philo->data->dead_lock);
 	if (!philo->data->dead)
 	{
 		time = get_time() - philo->data->start_time;
 		printf("%lu %d %s\n", time, philo->id, str);
 	}
+	pthread_mutex_unlock(&philo->data->dead_lock);
 	pthread_mutex_unlock(&philo->data->write_lock);
 }
 

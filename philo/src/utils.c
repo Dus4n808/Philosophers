@@ -6,7 +6,7 @@
 /*   By: dufama <dufama@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 18:15:07 by dufama            #+#    #+#             */
-/*   Updated: 2026/01/23 18:15:39 by dufama           ###   ########.fr       */
+/*   Updated: 2026/02/05 14:55:10 by dufama           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_overflow(const char *str, unsigned long *value)
 	*value = 0;
 	while (*str >= '0' && *str <= '9')
 	{
-		if (*value > (ULLONG_MAX - *str - '0') / 10)
+		if (*value > (ULLONG_MAX - (*str - '0')) / 10)
 			return (0);
 		*value = *value * 10 + (*str - '0');
 		str++;
